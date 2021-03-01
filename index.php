@@ -1,3 +1,9 @@
+<?php
+    $server = 'localhost';
+    $db = 'exo-194';
+    $user = 'root';
+    $pass = '';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -5,12 +11,40 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
+    <div class="info">
+        <h2>Informations utilisateurs :</h2>
+    </div>
+    <?php
+    try {
+        $bdd = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pass);
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+        $stmt = $bdd->prepare("SELECT nom, prenom, rue, numero, code_postal, ville, pays, mail FROM user");
 
+        $state = $stmt->execute();
 
+        if($state){
+            foreach ($stmt->fetchAll() as $user) {
+                echo "<div class='info'>";
+                echo "<div>".$user['prenom']." ".$user['nom']."</div>";
+                echo "<div>".$user['numero'].", ".$user['rue']." ".$user['code_postal']." ".$user['ville']." ".$user['pays']."</div>";
+                echo "<div>".$user['mail']."</div>";
+                echo "</div>";
+            }
+        }
+        else {
+            echo "erreur";
+        }
+    }
+    catch (PDOException $exception) {
+        echo $exception->getMessage();
+    }
+?>
 </body>
 </html>
 
@@ -30,30 +64,4 @@
  * 5. Faites la même chose, mais cette fois ci en ne sélectionnant que les noms et les prénoms.
  */
 
-try {
-    $server = 'localhost';
-    $db = 'exo-194';
-    $user = 'root';
-    $pass = '';
-
-    $bdd = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user, $pass);
-
-    $stmt = $bdd->prepare("SELECT nom, prenom, rue, numero, code_postal, ville, pays, mail");
-
-    $state = $stmt->execute();
-
-    if($state){
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-    else {
-        echo "erreur";
-    }
-}
-catch (PDOException $exception) {
-    echo $exception->getMessage();
-}
-
 ?>
-
-
