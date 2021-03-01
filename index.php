@@ -40,10 +40,52 @@
         else {
             echo "erreur";
         }
+        ?>
+        <div class="info">
+            <h2>Informations utilisateurs ordre inverse :</h2>
+        </div>
+        <?php
+
+        $stmt2 =$bdd->prepare("SELECT * from user ORDER BY id DESC");
+
+        $state2 = $stmt2->execute();
+
+        if($state2){
+            foreach ($stmt2->fetchAll() as $user) {
+                echo "<div class='info'>";
+                echo "<div>".$user['prenom']." ".$user['nom']."</div>";
+                echo "<div>".$user['numero'].", ".$user['rue']." ".$user['code_postal']." ".$user['ville']." ".$user['pays']."</div>";
+                echo "<div>".$user['mail']."</div>";
+                echo "</div>";
+            }
+        }
+        else {
+            echo "erreur";
+        }
+        ?>
+        <div class="info">
+            <h2>Utilisateurs : nom, prenom</h2>
+        </div>
+        <?php
+        $stmt3 =$bdd->prepare("SELECT * from user ORDER BY id DESC");
+
+        $state3 = $stmt3->execute();
+
+        if($state3){
+            foreach ($stmt3->fetchAll() as $user) {
+                echo "<div class='info'>";
+                echo "<div>".$user['prenom']." ".$user['nom']."</div>";
+                echo "</div>";
+            }
+        }
+        else {
+            echo "erreur";
+        }
     }
     catch (PDOException $exception) {
         echo $exception->getMessage();
     }
+
 ?>
 </body>
 </html>
