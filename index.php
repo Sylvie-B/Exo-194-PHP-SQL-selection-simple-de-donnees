@@ -12,7 +12,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>exo 194</title>
 </head>
 <body>
     <div class="info">
@@ -67,7 +67,7 @@
             <h2>Utilisateurs : nom, prenom</h2>
         </div>
         <?php
-        $stmt3 =$bdd->prepare("SELECT * from user ORDER BY id DESC");
+        $stmt3 =$bdd->prepare("SELECT nom, prenom FROM user ORDER BY id DESC");
 
         $state3 = $stmt3->execute();
 
